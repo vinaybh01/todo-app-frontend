@@ -1,0 +1,72 @@
+* {
+  background-color: black;
+  color: white;
+  font-family: "Poppins";
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 45px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title h2 {
+  margin-right: 95px;
+}
+.title input {
+  padding: 10px;
+  border: 2px solid gray;
+  border-radius: 10px;
+}
+
+.desc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.desc input {
+  padding: 10px;
+  border: 2px solid gray;
+  border-radius: 10px;
+}
+.desc h2 {
+  margin-right: 10px;
+}
+
+.btn {
+  margin: 20px;
+  padding: 10px;
+  font-size: large;
+  background-color: green;
+  border-radius: 10px;
+}
+
+.childEle {
+  font-size: 25px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.childEle span:first-child {
+  padding: 0px 10px;
+  color: green;
+}
+
+.childEle button {
+  margin: 8px;
+  padding: 10px;
+  background-color: brown;
+  border-radius: 10px;
+}

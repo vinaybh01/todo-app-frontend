@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans:wght@600;700;800&family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700&family=Urbanist:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      function deleteDone() {
+        console.log("Delete Done");
+      }
+
+      function deleteTodo(id) {
+        fetch("http://localhost:3000/todos/" + id, {
+          method: "DELETE",
+        }).then(deleteDone);
+      }
+
+      function todosCallback(data) {
+        var parentElement = document.getElementById("mainArea");
+        // parentElement.innerHTML = JSON.stringify(data);
+        for (var i = 0; i < data.length; i++) {
+          var childElement = document.createElement("div");
+          childElement.classList.add("childEle");
+
+          var grandChildElement1 = document.createElement("span");
+          grandChildElement1.innerHTML = data[i].title;
+
+          var grandChildElement2 = document.createElement("span");
+          grandChildElement2.innerHTML = data[i].description;
+
+          var grandChildElement3 = document.createElement("button");
+          grandChildElement3.innerHTML = "Delete";
+          grandChildElement3.setAttribute(
+            "onclick",
+            "deleteTodo(" + data[i].id + ")"
+          );
+
+          childElement.appendChild(grandChildElement1);
+          childElement.appendChild(grandChildElement2);
+          childElement.appendChild(grandChildElement3);
+
+          parentElement.appendChild(childElement);
+        }
+      }
+      function getDataCallback(resp) {
+        resp.json().then(todosCallback);
+      }
+
+      function getData() {
+        fetch("http://localhost:3000/todos", {
+          method: "GET",
+        }).then(getDataCallback);
+      }
+
+      getData();
+
+      function parsedResponse(data) {
+        var parentElement = document.getElementById("mainArea");
+        console.log(data);
+        // parentElement.innerHTML = JSON.stringify(data);
+        var childElement = document.createElement("div");
+
+        var grandChildElement1 = document.createElement("span");
+        grandChildElement1.innerHTML = data.title;
+
+        var grandChildElement2 = document.createElement("span");
+        grandChildElement2.innerHTML = data.description;
+
+        var grandChildElement3 = document.createElement("button");
+        grandChildElement3.innerHTML = "Delete";
+
+        childElement.appendChild(grandChildElement1);
+        childElement.appendChild(grandChildElement2);
+        childElement.appendChild(grandChildElement3);
+
+        parentElement.appendChild(childElement);
+      }
+
+      function callbackFn(resp) {
+        resp.json().then(parsedResponse);
+      }
+
+      function onPress() {
+        const title = document.getElementById("title1").value;
+        // console.log(title);
+        const description = document.getElementById("description1").value;
+        // console.log(description);
+
+        fetch("http://localhost:3000/todos", {
+          method: "POST",
+          body: JSON.stringify({
+            title,
+            description,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then(callbackFn);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>TODO</h1>
+    <div class="title">
+      <h2>Title</h2>
+      <input type="text" id="title1" />
+    </div>
+    <div class="desc">
+      <h2>Description</h2>
+      <input type="text" id="description1" />
+    </div>
+    <button class="btn" onclick="onPress()">Submit</button>
+    <div id="mainArea"></div>
+  </body>
+</html>
